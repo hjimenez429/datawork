@@ -11,4 +11,15 @@ $(document).ready(function() {
 			});			
 		});
 	});
+	$('.upd').change(function() {
+      $.ajax({
+        url: 'http://127.0.0.1:8000/update/' + $('#pt').val() + '/' + $('#ag').val() + '/',
+        success: function(result){
+          $('#dv').html(result.udD);
+          $("head").append(result.udS);
+      }});
+    });
+
+    $('.upd').change();
 });
+

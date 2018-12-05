@@ -6,26 +6,27 @@
 		<title>Data Job!</title>
 		<link rel="stylesheet" href="{% sass_src 'css/styles.scss' %}">
 		<link rel="stylesheet" href="{% static 'css/foundation.min.css' %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
 		<header>
 			<nav>
 				<span>Data Work!</span>
-				<img src="{% static 'images/logout.png' %}" />
+				<img src="{% static 'img/logout.png' %}" />
 			</nav>
 		</header>
 		<section id="result">
 			<div class="grid-container">
 				<div id="ms" class="grid-x grid-margin-x align-center-middle">
-					<div class="cell small-4 step-btn step-active" data-step="1">GENERAL DB<span></span></div>
-					<div class="cell small-4 step-btn" data-step="2">NEW YORK DB<span></span></div>
+					<div class="cell small-4 step-btn step-active" data-step="1">GENERAL<span></span></div>
+					<div class="cell small-4 step-btn" data-step="2">ESPECÍFICO<span></span></div>
 					<div class="cell small-4 step-btn" data-step="3">OFERTA RECOMENDADA!<span></span></div>
 				</div>
 
 				<div class="grid-x align-center-middle step step-1 active">
 					<div class="cell">
 						<div class="grid-x grid-margin-y">
-							<h2 class="cell">Ofertas por ciudad</h2>
+							<h2 class="cell">Ofertas por localidad de New York</h2>
 							<div class="cell">
 								<div class="grid-x">
 									<div class="cell">
@@ -39,11 +40,12 @@
 									<div class="cell medium-6 align-self-stretch">
 										<div class="grid-x middle align-middle">
 											<div class="cell">
-												La presente gráfica indica la cantidad de ciudades presentes en cada ciudad.
+												La siguiente gráfica presenta la cantidad de ofertas por localidad de New York
 											</div>
 										</div>
 									</div>
 
+                                    <div class="cell c-table medium-6">
 									<table class="cell medium-6" cellspacing="0" cellpadding="0">
 										<thead>
 											<tr>
@@ -54,13 +56,13 @@
 										<tbody>
 											{% for x,y in muestra %}
                                                 <tr>
-                                                    <td>{{ forloop.counter }}</td>
                                                     <td>{{x}}</td>
                                                     <td>{{y}}</td>
                                                 </tr>
                                                 {% endfor %}
 										</tbody>
 									</table>
+                                    </div>
 
 								</div>
 							</div>
@@ -79,7 +81,7 @@
 										<div class="grid-x middle align-middle">
 											<div class="cell">
 												La siguiente gráfica presenta la cantidad de ofertas en las últimas semanas,
-												siendo la <b>semana 2</b> la que presento más ofertas con una cantidad de <b>235</b>
+												siendo la <b>semana 4</b> la que presento más ofertas con una cantidad de <b>1439</b>
 											</div>
 										</div>
 									</div>
@@ -208,15 +210,11 @@
 								<td>Profesión</td>
 								<td>Si</td>
 							</tr>
-							<tr>
-								<td>Ciudad</td>
-								<td>Si</td>
-							</tr>
 						</tbody>
 						<tfoot>
 							<tr>
 								<td colspan="1"><b>Probabilidad</b></td>
-								<td>30%</td>
+								<td>20%</td>
 							</tr>
 						</tfoot>
 					</table>

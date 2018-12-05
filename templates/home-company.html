@@ -6,51 +6,23 @@
 		<title>Data Job!</title>
 		<link rel="stylesheet" href="{% sass_src 'css/styles.scss' %}">
 		<link rel="stylesheet" href="{% static 'css/foundation.min.css' %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
 		<header>
 			<nav>
 				<span>Data Job!</span>
+				<img src="{% static 'img/logout.png' %}" />
 			</nav>
 		</header>
 		<section id="login">
 			<div class="grid-container">
 				<div class="grid-x align-center-middle flex-dir-column">
-					<h2 class="cell medium-6">Welcome to Data Work!</h2>
+					<h2 class="cell medium-6">Bienvenido a Data Job!</h2>
 
-					<p class="cell medium-6">Please complete the following form.</p>
+					<p class="cell medium-6">En la siguiente aplicación web puede consultar información de relativa utilidad sobre las distintas ofertas laborales que se han publicado en la bolsa de empleo de Nueva York.</p>
 
-					<fieldset class="cell medium-6 fs">
-						<label>* Trade:</label>
-						<select>
-							{% for posts in posts%}
-							<option value="{{posts}}" label="{{posts}}"></option>
-							{% endfor%}
-						</select>
-						<span class="error">This field is required.</span>
-					</fieldset>
-
-					<fieldset class="cell medium-6 fs">
-						<label>* Proffesion (title):</label>
-						<select>
-							{% for profesion in profesion%}
-							<option value="{{profesion}}" label="{{profesion}}"></option>
-							{% endfor%}
-						</select>
-						<span class="error">This field is invalid.</span>
-					</fieldset>
-
-					<fieldset class="cell medium-6 fs">
-						<label>* City:</label>
-						<select>
-							{% for pais in pais%}
-							<option value="{{pais}}" label="{{pais}}"></option>
-							{% endfor%}
-						</select>
-						<span class="error">This field is invalid.</span>
-					</fieldset>
-
-					<a href="http://127.0.0.1:8000/result-company/" class="cell medium-6 btn">Get Offers</a>
+					<a href="http://127.0.0.1:8000/result-company/" class="cell medium-6 btn">Ver Ofertas</a>
 				</div>
 			</div>
 		</section>

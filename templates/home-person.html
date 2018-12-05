@@ -6,57 +6,41 @@
 		<title>Data Job!</title>
 		<link rel="stylesheet" href="{% sass_src 'css/styles.scss' %}">
 		<link rel="stylesheet" href="{% static 'css/foundation.min.css' %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
 		<header>
 			<nav>
 				<span>Data Job!</span>
+				<img src="{% static 'img/logout.png' %}" />
 			</nav>
 		</header>
 		<section id="login">
 			<div class="grid-container">
 				<div class="grid-x align-center-middle flex-dir-column">
-					<h2 class="cell medium-6">Welcome to Data Work!</h2>
+					<h2 class="cell medium-6">Bienvenido a Data Job!</h2>
 					
-					<p class="cell medium-6">Please complete the following form.</p>
+					<p class="cell medium-6">Por favor complete la siguiente información.</p>
 
 					<fieldset class="cell medium-6 fs">
-						<label>* Trade:</label>
+						<label>* Cargo:</label>
 						<select>
-							<option>Choose...</option>
-							<option>Designer</option>
-							<option>Developer</option>
+							{% for posts in posts%}
+							<option value="{{posts}}" label="{{posts}}"></option>
+							{% endfor%}
 						</select>
-						<span class="error">This field is required.</span>
 					</fieldset>
 
 					<fieldset class="cell medium-6 fs">
-						<label>* Proffesion (title):</label>
+						<label>* Profesión:</label>
 						<select>
-							<option>Choose...</option>
-							<option>Designer</option>
-							<option>Developer</option>
+							{% for profesion in profesion%}
+							<option value="{{profesion}}" label="{{profesion}}"></option>
+							{% endfor%}
 						</select>
-						<span class="error">This field is invalid.</span>
-					</fieldset>
-				
-					<fieldset class="cell medium-6 fs">
-						<label>* City:</label>
-						<select>
-							<option>Choose...</option>
-							<option>San Francisco</option>
-							<option>New York</option>
-						</select>
-						<span class="error">This field is invalid.</span>
 					</fieldset>
 
-					<fieldset class="cell medium-6 fs">
-						<label>* Personal Skills:</label>
-						<input type="text" />
-						<span class="error"></span>
-					</fieldset>
-
-					<a href="http://127.0.0.1:8000/result-person/" class="cell medium-6 btn">Get Offers</a>
+					<a href="http://127.0.0.1:8000/result-person/" class="cell medium-6 btn">Ver Ofertas</a>
 				</div>
 			</div>
 		</section>

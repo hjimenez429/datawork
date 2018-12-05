@@ -9,25 +9,28 @@
     <link href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.0.min.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="{% sass_src 'css/styles.scss' %}">
 		<link rel="stylesheet" href="{% static 'css/foundation.min.css' %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
 		<header>
 			<nav>
 				<span>Data Job!</span>
+				<img src="{% static 'img/logout.png' %}">
 			</nav>
 		</header>
 
 		<section id="result">
 			<div class="grid-container">
 				<div id="ms" class="grid-x grid-margin-x align-center-middle">
-					<div class="cell small-6 step-btn step-active" data-step="1">GENERAL STATS<span></span></div>
-					<div class="cell small-6 step-btn" data-step="2">NEW YORK STATS!<span></span></div>
+					<div class="cell small-4 step-btn step-active" data-step="1">GENERAL<span></span></div>
+					<div class="cell small-4 step-btn" data-step="2">ESPECÍFICO<span></span></div>
+					<div class="cell small-4 step-btn" data-step="3">DASHBOARD!<span></span></div>
 				</div>
 
 				<div class="grid-x align-center-middle step step-1 active">
 					<div class="cell">
-						<div class="grid-x grid-padding-y">
-							<h2 class="cell">Offers By City</h2>
+						<div class="grid-x grid-margin-y">
+							<h2 class="cell">Ofertas por localidad de New York</h2>
 							<div class="cell">
 								<div class="grid-x">
 									<div class="cell">
@@ -41,32 +44,28 @@
 									<div class="cell medium-6 align-self-stretch">
 										<div class="grid-x middle align-middle">
 											<div class="cell">
-												The following graph show the amount of offers in each city.
+												La presente gráfica muestra la cantidad de ofertas publicadas por localidades en New York.
 											</div>
 										</div>
 									</div>
 
-									<div class="separator-vertical"></div>
-
-                                    <div class="c-table cell medium-6">
-                                        <table cellspacing="0" cellpadding="0">
-                                            <thead>
+                                    <div class="cell medium-6 c-table">
+									<table class="" cellspacing="0" cellpadding="0">
+										<thead>
+											<tr>
+												<th>Ciudad</th>
+												<th>Ofertas</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for x,y in muestra %}
                                                 <tr>
-                                                    <th>#</th>
-                                                    <th>City</th>
-                                                    <th>Offers</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                              {% for x,y in muestra %}
-                                                <tr>
-                                                    <td>{{ forloop.counter }}</td>
                                                     <td>{{x}}</td>
                                                     <td>{{y}}</td>
                                                 </tr>
                                                 {% endfor %}
-                                            </tbody>
-                                        </table>
+										</tbody>
+									</table>
                                     </div>
 
 								</div>
@@ -77,34 +76,30 @@
 							<div class="cell separator"></div>
 						</div>
 
-						<div class="grid-x grid-padding-y">
-							<h2 class="cell">Offers By Week</h2>
-							<div class="cell">
-								<div class="grid-x grid-margin-y">
-									<div class="cell">
-      							{{ fig2 | safe }}
-									</div>
-								</div>
-							</div>
+						<div class="grid-x grid-margin-y">
+							<h2 class="cell">Ofertas por semana</h2>
 
 							<div class="cell">
 								<div class="grid-x grid-margin-x">
-									<div class="cell medium-6 align-self-stretch">
+									<div class="cell medium-4 align-self-stretch">
 										<div class="grid-x middle align-middle">
 											<div class="cell">
-												The following graph show the amount of offers in last 3 weeks and a prediction for next week.
+												La siguiente gráfica presenta la cantidad de ofertas en las últimas semanas,
+												siendo la <b>semana 4</b> la que presento más ofertas con una cantidad de <b>1439</b>
 											</div>
 										</div>
 									</div>
 
-									<div class="separator-vertical"></div>
-
-                                    <div class="c-table cell medium-6">
+									<div class="cell medium-8" cellspacing="0" cellpadding="0">
+										{{ fig2 | safe }}
+									</div>
+								</div>
+                                <div class="c-table cell medium-6">
                                         <table class="cell medium-6" cellspacing="0" cellpadding="0">
                                             <thead>
                                                 <tr>
-                                                    <th>Week</th>
-                                                    <th>Offer Amount</th>
+                                                    <th>Semana</th>
+                                                    <th>Cantidad de ofertas Internas/Externas</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -117,20 +112,18 @@
                                             </tbody>
                                         </table>
                                     </div>
-								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+
 				<div class="grid-x align-center-middle step step-2">
 					<div class="cell">
-						<div class="grid-x grid-margin-x grid-padding-y">
+						<div class="grid-x grid-margin-x">
 							<h2 class="cell">Empleos por agencia</h2>
-                            <div class="cell medium-8">
-                                {{ fig5 | safe }}
-                            </div>
-
-							<!--<div class="separator-vertical"></div>-->
+							<div class="cell medium-8" cellspacing="0" cellpadding="0">
+								{{ fig5 | safe }}
+							</div>
 
 							<div class="cell medium-4">
 								Las agencias de contratación de la Ciudad de Nueva York que más vacantes
@@ -150,7 +143,7 @@
 
 						<div class="grid-x grid-margin-x">
 							<h2 class="cell">Ofertas internas/externas</h2>
-							<div class="cell medium-6 align-self-stretch">
+							<div class="cell medium-4 align-self-stretch">
 								<div class="grid-x middle align-middle">
 									<div class="cell">
 										A continuación la siguiente gráfica de barras para tipo de publicación,
@@ -162,7 +155,7 @@
 								</div>
 							</div>
 
-							<div class="cell medium-6">
+							<div class="cell medium-8">
 								{{ fig3 | safe }}
 							</div>
 
@@ -171,11 +164,9 @@
 
 						<div class="grid-x grid-margin-x">
 							<h2 class="cell">Empleos con mayor oferta</h2>
-							<div class="cell medium-8">
-                                {{ fig6 | safe }}
-                            </div>
-
-							<div class="separator-vertical"></div>
+							<div class="cell medium-8" cellspacing="0" cellpadding="0">
+								{{ fig6 | safe }}
+							</div>
 
 							<div class="cell medium-4 align-self-stretch">
 								<div class="grid-x middle align-middle">
@@ -192,35 +183,38 @@
 									</div>
 								</div>
 							</div>
-
-							<div class="separator"></div>
-						</div>
-
-
-						<div class="grid-x grid-margin-x">
-							<h2 class="cell">Ofertas de medio / tiempo completo</h2>
-							<div class="cell medium-4 align-self-stretch">
-								<div class="grid-x middle align-middle">
-									<div class="cell">
-										Para la variable tiempo total / tiempo parcial que denota si el trabajo es a
-                                        tiempo completo o parcial, se obtuvieron los siguientes resultados.
-                                        El <b>92.6%</b>b> de las vacantes son para tiempo total,
-                                        mientras que el <b>7.4%</b> son para tiempo parcial.
-									</div>
-								</div>
-							</div>
-
-							<!--<div class="separator-vertical"></div>-->
-
-							<div class="cell medium-8">
-								{{ fig7 | safe }}
-							</div>
-
-							<div class="separator"></div>
 						</div>
 					</div>
 				</div>
 
+				<div class="grid-x align-center-middle step step-3">
+                    <div class="cell">
+                        <div class="grid-x">
+                            <div class="cell">
+                                <div class="grid-x">
+                                    <fieldset class="cell fs">
+                                        <label> Tipo de ofertas </label>
+                                        <select id="pt" class="upd">
+                                            <option value="Internal">Internas</option>
+                                            <option value="External">Externas</option>
+                                        </select>
+                                    </fieldset>
+                                    <fieldset class="cell fs">
+                                        <label> Cantidad de agencias </label>
+                                        <select id="ag" class="upd">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3" selected>3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="cell medium-8"><div id="dv"></div></div>
+                        </div>
+                    </div>
+	            </div>
 			</div>
 		</section>
 		<footer>
@@ -228,7 +222,7 @@
       <script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-1.0.1.min.js"></script>
 			<script type="text/javascript" src="{% static "js/jquery-3.3.1.min.js" %}"></script>
 			<script type="text/javascript" src="{% static "js/script.js" %}"></script>
-    	{{ script1 | safe }}
+        {{ script1 | safe }}
     	{{ script2 | safe }}
     	{{ script3 | safe }}
     	{{ script4 | safe }}

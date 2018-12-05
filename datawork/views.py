@@ -30,6 +30,14 @@ from .forms import userform
 
 from django.shortcuts import render, redirect
 
+from bokeh.core.properties import value
+from django.http import JsonResponse
+from bokeh.models import (CategoricalColorMapper, HoverTool,
+						  ColumnDataSource, Panel,
+						  FuncTickFormatter, SingleIntervalTicker, LinearAxis, Select)
+
+
+
 
 
 
@@ -56,7 +64,7 @@ def login(request):
         if valor1>=1:
             return redirect('home-person/')
         else:
-            return redirect('result-company/')
+            return redirect('home-company/')
         #return redirect('result-company/')
 
 
@@ -75,9 +83,13 @@ def homeCompany(request):
                               'profesion':profesion, 'pais':pais})
 
 def homePerson(request):
-    t = get_template('home-person.html')
-    html = t.render()
-    return HttpResponse(html)
+    df = pd.read_csv(open(join(dirname(__file__), 'nyc-jobs.csv')))
+    posts = list(set(df['Business Title']))
+    profesion = list(set(df['Job Category']))
+    pais = list(set(df['Work Location']))
+    return render_to_response('home-person.html', {'posts': posts,
+                                                    'profesion': profesion, 'pais': pais})
+
 
 def resultCompany(request):
     df = pd.read_csv(open(join(dirname(__file__), 'nyc-jobs.csv')))
@@ -110,16 +122,29 @@ def resultCompany(request):
 
     # Cantidad de ofertas laborales por la semana 3.
     mask3 = (df['Posting Date'] >= '2018-10-15') & (df['Posting Date'] <= '2018-10-21')
-    pr = df.loc[mask3].count()
-    week3 = pr['Posting Date']
+    interno2 = (df['Posting Date'] >= '2018-10-15') & (df['Posting Date'] <= '2018-10-21') & (
+            df['Posting Type'] == 'Internal')
+    externo2 = (df['Posting Date'] >= '2018-10-15') & (df['Posting Date'] <= '2018-10-21') & (
+            df['Posting Type'] == 'External')
+    pr0 = df.loc[mask2].count()
+    pr1 = df.loc[interno2].count()
+    pr2 = df.loc[externo2].count()
+    week3 = pr0['Posting Date']
+    week3I = pr1['Posting Type']
+    week3E = pr2['Posting Type']
 
     # Cantidad de ofertas laborales por la semana 4.
     mask4 = (df['Posting Date'] >= '2018-10-21') & (df['Posting Date'] <= '2018-10-31')
-
-    pr = df.loc[mask4].count()
-    interno = pr['Posting Type']
-    #print(interno)
-    week4 = pr['Posting Date']
+    interno2 = (df['Posting Date'] >= '2018-10-15') & (df['Posting Date'] <= '2018-10-21') & (
+            df['Posting Type'] == 'Internal')
+    externo2 = (df['Posting Date'] >= '2018-10-15') & (df['Posting Date'] <= '2018-10-21') & (
+            df['Posting Type'] == 'External')
+    pr0 = df.loc[mask2].count()
+    pr1 = df.loc[interno2].count()
+    pr2 = df.loc[externo2].count()
+    week4 = pr0['Posting Date']
+    week4I = pr1['Posting Type']
+    week4E = pr2['Posting Type']
 
     #Cantidad de empleos por ciudad
     z = df['Work Location']
@@ -168,6 +193,7 @@ def resultCompany(request):
         x_axis_label='City',
         x_range=x,
         y_axis_label='Offer amount',
+        sizing_mode="scale_width",
         plot_width=950,
         plot_height=400)
 
@@ -175,24 +201,22 @@ def resultCompany(request):
     plot.line(x, y, legend='Amount', line_width=2, color='#6FB543')
     script, div = components(plot)
 
-    x = ['Week 1','Internal Week 1','External Week 1' ,'Week 2','Internal Week 2','External Week 2', 'Week 3', 'Week 4']
-    y= [week1,week1I,week1E ,week2,week2I,week2E,week3, week4]
 
-    x0 = ['Week 1', 'Internal Week 1', 'External Week 1', 'Week 2', 'Week 3', 'Week 4']
-    y0 = [week1, week1I, week1E, week2, week3, week4]
+    x = ['Week 1', 'Week 2', 'Week 3', 'Week 4']
+    y = [week1, week2, week3, week4]
 
-    #y2 = [100, 200, 205, 204]
+    ty = [week1I, week2I, week3I, week4I]
+
+    tx = [week1E, week1E, week1E, week1E]
+
     title = 'Offers x week'
 
-    plot2 = figure(
-        title=title,
-        x_axis_label='Week',
-        x_range=x,
-        y_axis_label='Offer amount',
-        plot_width=950,
-        plot_height=400)
+    source = ColumnDataSource(data=dict(x=x, y=y, ty=ty))
 
-    plot2.vbar(x, top=y, legend='Amount', width=0.9, color='#6FB543')
+    plot2 = figure(x_range=x, plot_height=200, plot_width=300, title="", toolbar_location=None,
+                   sizing_mode="scale_width")
+    plot2.vbar(x='x', top='y', source=source, width=0.2, color="#1F9245", line_color='red', legend=('Ofertas Totales'))
+    plot2.vbar(x='x', top='ty', source=source, width=0.2, color="#6FB543", line_color='black', legend='Ofertas Inters')
 
     script2, div2 = components(plot2)
 
@@ -204,6 +228,7 @@ def resultCompany(request):
         title=title,
         x_range=x3,
         plot_width=400,
+        sizing_mode="scale_width",
         plot_height=400)
 
     plot3.vbar(x3, top=y3, legend='Amount', width=0.9, color='#6FB543')
@@ -230,6 +255,7 @@ def resultCompany(request):
     data['color'] = Category20c[len(x2)]
 
     plot4 = figure(
+        sizing_mode="scale_width",
     plot_height = 400, plot_width=400, title = "Jornada Laboral", toolbar_location = None,
     tools = "hover", tooltips = "@jornada: @value", x_range = (-0.5, 1.0))
 
@@ -249,6 +275,7 @@ def resultCompany(request):
     data['color'] = Category20c[len(x2)]
 
     plot5 = figure(
+        sizing_mode="scale_width",
         plot_height=400, plot_width=600, title="Jornada Laboral", toolbar_location=None,
         tools="hover", tooltips="@jornada: @value", x_range=(-0.5, 1.0))
 
@@ -268,6 +295,7 @@ def resultCompany(request):
     data['color'] = Category20c[len(x3)]
 
     plot6 = figure(
+        sizing_mode="scale_width",
         plot_height=400, plot_width=600, title="Jornada Laboral", toolbar_location=None,
         tools="hover", tooltips="@jornada: @value", x_range=(-0.5, 1.0))
 
@@ -287,6 +315,7 @@ def resultCompany(request):
     data['color'] = Category20c[len(x5)]
 
     plot7 = figure(
+        sizing_mode="scale_width",
         plot_height=400, plot_width=600, title="Jornada Laboral", toolbar_location=None,
         tools="hover", tooltips="@jornada: @value", x_range=(-0.5, 1.0))
 
@@ -349,16 +378,29 @@ def resultPerson(request):
 
     # Cantidad de ofertas laborales por la semana 3.
     mask3 = (df['Posting Date'] >= '2018-10-15') & (df['Posting Date'] <= '2018-10-21')
-    pr = df.loc[mask3].count()
-    week3 = pr['Posting Date']
+    interno2 = (df['Posting Date'] >= '2018-10-15') & (df['Posting Date'] <= '2018-10-21') & (
+            df['Posting Type'] == 'Internal')
+    externo2 = (df['Posting Date'] >= '2018-10-15') & (df['Posting Date'] <= '2018-10-21') & (
+            df['Posting Type'] == 'External')
+    pr0 = df.loc[mask2].count()
+    pr1 = df.loc[interno2].count()
+    pr2 = df.loc[externo2].count()
+    week3 = pr0['Posting Date']
+    week3I = pr1['Posting Type']
+    week3E = pr2['Posting Type']
 
     # Cantidad de ofertas laborales por la semana 4.
     mask4 = (df['Posting Date'] >= '2018-10-21') & (df['Posting Date'] <= '2018-10-31')
-
-    pr = df.loc[mask4].count()
-    interno = pr['Posting Type']
-    # print(interno)
-    week4 = pr['Posting Date']
+    interno2 = (df['Posting Date'] >= '2018-10-15') & (df['Posting Date'] <= '2018-10-21') & (
+            df['Posting Type'] == 'Internal')
+    externo2 = (df['Posting Date'] >= '2018-10-15') & (df['Posting Date'] <= '2018-10-21') & (
+            df['Posting Type'] == 'External')
+    pr0 = df.loc[mask2].count()
+    pr1 = df.loc[interno2].count()
+    pr2 = df.loc[externo2].count()
+    week4 = pr0['Posting Date']
+    week4I = pr1['Posting Type']
+    week4E = pr2['Posting Type']
 
     # Cantidad de empleos por ciudad
     z = df['Work Location']
@@ -407,6 +449,7 @@ def resultPerson(request):
         x_axis_label='City',
         x_range=x,
         y_axis_label='Offer amount',
+        sizing_mode="scale_width",
         plot_width=950,
         plot_height=400)
 
@@ -414,25 +457,24 @@ def resultPerson(request):
     plot.line(x, y, legend='Amount', line_width=2, color='#6FB543')
     script, div = components(plot)
 
-    x = ['Week 1', 'Internal Week 1', 'External Week 1', 'Week 2', 'Internal Week 2', 'External Week 2', 'Week 3',
-         'Week 4']
-    y = [week1, week1I, week1E, week2, week2I, week2E, week3, week4]
+    x = ['Week 1', 'Week 2', 'Week 3','Week 4']
+    y = [week1,week2, week3, week4]
 
-    x0 = ['Week 1', 'Internal Week 1', 'External Week 1', 'Week 2', 'Week 3', 'Week 4']
-    y0 = [week1, week1I, week1E, week2, week3, week4]
 
-    # y2 = [100, 200, 205, 204]
+    ty = [week1I, week2I, week3I,week4I]
+
+    tx = [week1E, week1E, week1E, week1E]
+
+
+
     title = 'Offers x week'
 
-    plot2 = figure(
-        title=title,
-        x_axis_label='Week',
-        x_range=x,
-        y_axis_label='Offer amount',
-        plot_width=950,
-        plot_height=400)
 
-    plot2.vbar(x, top=y, legend='Amount', width=0.9, color='#6FB543')
+    source = ColumnDataSource(data=dict(x=x, y=y, ty=ty))
+
+    plot2 = figure(x_range=x, plot_height=200, plot_width=300, title="", toolbar_location=None, sizing_mode="scale_width")
+    plot2.vbar(x='x', top='y', source=source, width=0.2, color="#1F9245", line_color='red', legend=('Ofertas Totales'))
+    plot2.vbar(x='x', top='ty', source=source, width=0.2, color="#6FB543", line_color='black', legend='Ofertas Inters')
 
     script2, div2 = components(plot2)
 
@@ -442,6 +484,7 @@ def resultPerson(request):
 
     plot3 = figure(
         title=title,
+        sizing_mode="scale_width",
         x_range=x3,
         plot_width=400,
         plot_height=400)
@@ -466,6 +509,7 @@ def resultPerson(request):
     data['color'] = Category20c[len(x2)]
 
     plot4 = figure(
+        sizing_mode="scale_width",
         plot_height=400, plot_width=400, title="Jornada Laboral", toolbar_location=None,
         tools="hover", tooltips="@jornada: @value", x_range=(-0.5, 1.0))
 
@@ -485,6 +529,7 @@ def resultPerson(request):
     data['color'] = Category20c[len(x2)]
 
     plot5 = figure(
+        sizing_mode="scale_width",
         plot_height=400, plot_width=600, title="Jornada Laboral", toolbar_location=None,
         tools="hover", tooltips="@jornada: @value", x_range=(-0.5, 1.0))
 
@@ -504,6 +549,7 @@ def resultPerson(request):
     data['color'] = Category20c[len(x3)]
 
     plot6 = figure(
+        sizing_mode="scale_width",
         plot_height=400, plot_width=600, title="Jornada Laboral", toolbar_location=None,
         tools="hover", tooltips="@jornada: @value", x_range=(-0.5, 1.0))
 
@@ -523,6 +569,7 @@ def resultPerson(request):
     data['color'] = Category20c[len(x5)]
 
     plot7 = figure(
+        sizing_mode="scale_width",
         plot_height=400, plot_width=600, title="Jornada Laboral", toolbar_location=None,
         tools="hover", tooltips="@jornada: @value", x_range=(-0.5, 1.0))
 
@@ -547,3 +594,86 @@ def resultPerson(request):
          'script7': script7, 'fig7': div7,
          'muestra': muestra, 'muestra1': muestra1}
     )
+def updateDashboard(request,a,b):
+
+    df = pd.read_csv(open(join(dirname(__file__), 'nyc-jobs.csv')), sep=',',header=None)
+    df.columns = ['job_id', 'agency', 'posting_type', 'n_of_positions', 'business_title',
+                  'civil_service_title', 'title_code_no', 'level', 'job_category', 'journal',
+                  'salary_range_from', 'salary_range_to', 'salary_frecuence', 'work_location',
+                  'division', 'job_description', 'minimum_qual_requirements', 'preferred_skills',
+                  'additional_information', 'to_apply', 'hours_shift', 'work_location', 'recruitment_contact',
+                  'residency_requirement', 'posting_date', 'post_until', 'posting_updated', 'process_date']
+
+    axis_map = {
+        "Tipo de oferta": "posting_type",
+        "Agencia": "agency"
+    }
+
+    posting_map = {
+        "External", "Internal"
+    }
+
+    lang = {"External": "Externas", "Internal": "Internas"}
+
+    # Create Input controls
+    #posting_type = Select(title="Tipo de oferta", options=sorted(posting_map), value="Internal")
+    #amount = Slider(title="Cantidad de Agencias", value=3, start=1, end=10, step=1)
+    y_axis = Select(title="Y Axis", options=sorted(axis_map.keys()), value="Cantidad de ofertas")
+    x_axis = Select(title="X Axis", options=sorted(axis_map.keys()), value="Agencia")
+
+    x = df['agency'].value_counts().index.tolist()
+    y = df['agency'].value_counts().tolist()
+    x = x[:b]
+    y = y[:b]
+
+    ty = df['agency'].value_counts().tolist()
+    ty = ty[:b]
+    source = ColumnDataSource(data=dict(x=x, y=y, ty=ty))
+
+    p = figure(x_range=x, plot_height=200, plot_width=400, title="", toolbar_location=None, sizing_mode="scale_width")
+    p.vbar(x='x', top='ty', source=source, width=0.2, color="#1F9245", line_color='red', legend=('Ofertas Totales'))
+    p.vbar(x='x', top='y', source=source, width=0.2, color="#6FB543", line_color='black', legend='Ofertas ' + lang[a])
+
+    # curdoc().clear()
+    # show(p)
+
+    def select_offers():
+        selected = df[
+            (df['posting_type'] == a)
+        ]
+
+        return selected
+
+    def total_offers():
+        return df
+
+    def update():
+        df2 = select_offers()
+        dft = total_offers()
+
+        x = df2['agency'].value_counts().index.tolist()
+        y = df2['agency'].value_counts().tolist()
+        x = x[:b]
+        y = y[:b]
+
+        ty = dft['agency'].value_counts().tolist()
+        ty = ty[:b]
+        print(y)
+        print(ty)
+
+        p.xaxis.axis_label = x_axis.value
+        p.yaxis.axis_label = y_axis.value
+        p.x_range.factors = x
+        p.title.text = 'Cantidad de agencias: %d' % b + '.  Tipo de oferta: ' + a
+        source.data = dict(
+            x=x,
+            y=y,
+            ty=ty,
+        )
+
+    update()
+    update()
+
+    s3, d3 = components(p)
+
+    return JsonResponse({'udD': d3, 'udS': s3})

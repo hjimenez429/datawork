@@ -28,6 +28,7 @@ urlpatterns = [
 		path('home-person/', views.homePerson, name='homePerson'),
 		path('result-company/', views.resultCompany, name='resultCompany'),
 		path('result-person/', views.resultPerson, name='resultPerson'),
+		path('update/<slug:a>/<int:b>/', views.updateDashboard, name='updateDashboard'),
         path('admin/', admin.site.urls),
 
 ]
