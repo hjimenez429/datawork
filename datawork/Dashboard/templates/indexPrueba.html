@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>DAP Graph Plotter</title>
+        <link href="http://cdn.pydata.org/bokeh/release/bokeh-1.0.1.min.css" rel="stylesheet" type="text/css">
+        <link href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-1.0.1.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="http://www.askprateek.com/style.css">
+    </head>
+<body>
+    <div class="container">
+        <div class="row">
+        <div class="col s12 m6 offset-s6 offset-m3 center-align">
+        {{ div | safe }}
+        </div>
+        
+        </div>
+        </div>
+        <script src="http://cdn.pydata.org/bokeh/release/bokeh-1.0.1.min.js"></script>
+        <script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-1.0.1.min.js"></script>
+        {{ script | safe }}
+</body>
+</html>

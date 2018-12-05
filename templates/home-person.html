@@ -1,0 +1,64 @@
+{% load static %}
+{% load sass_tags %}
+<!DOCTYPE html>
+<html>
+  <head>
+		<title>Data Job!</title>
+		<link rel="stylesheet" href="{% sass_src 'css/styles.scss' %}">
+		<link rel="stylesheet" href="{% static 'css/foundation.min.css' %}">
+  </head>
+  <body>
+		<header>
+			<nav>
+				<span>Data Job!</span>
+			</nav>
+		</header>
+		<section id="login">
+			<div class="grid-container">
+				<div class="grid-x align-center-middle flex-dir-column">
+					<h2 class="cell medium-6">Welcome to Data Work!</h2>
+					
+					<p class="cell medium-6">Please complete the following form.</p>
+
+					<fieldset class="cell medium-6 fs">
+						<label>* Trade:</label>
+						<select>
+							<option>Choose...</option>
+							<option>Designer</option>
+							<option>Developer</option>
+						</select>
+						<span class="error">This field is required.</span>
+					</fieldset>
+
+					<fieldset class="cell medium-6 fs">
+						<label>* Proffesion (title):</label>
+						<select>
+							<option>Choose...</option>
+							<option>Designer</option>
+							<option>Developer</option>
+						</select>
+						<span class="error">This field is invalid.</span>
+					</fieldset>
+				
+					<fieldset class="cell medium-6 fs">
+						<label>* City:</label>
+						<select>
+							<option>Choose...</option>
+							<option>San Francisco</option>
+							<option>New York</option>
+						</select>
+						<span class="error">This field is invalid.</span>
+					</fieldset>
+
+					<fieldset class="cell medium-6 fs">
+						<label>* Personal Skills:</label>
+						<input type="text" />
+						<span class="error"></span>
+					</fieldset>
+
+					<a href="http://127.0.0.1:8000/result-person/" class="cell medium-6 btn">Get Offers</a>
+				</div>
+			</div>
+		</section>
+  </body>
+</html>

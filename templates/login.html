@@ -1,0 +1,30 @@
+{% load static %}
+{% load sass_tags %}
+<!DOCTYPE html>
+<html>
+  <head>
+		<title>Data Job!</title>
+		<link rel="stylesheet" href="{% sass_src 'css/styles.scss' %}">
+		<link rel="stylesheet" href="{% static 'css/foundation.min.css' %}">
+  </head>
+  <body>
+		<header>
+			<nav>
+				<span>Data Job!</span>
+			</nav>
+		</header>
+		<section id="login">
+			<div class="grid-container">
+				<div class="grid-x align-center-middle flex-dir-column">
+                    <form action="" method="post">
+                         {% csrf_token %}
+                        <table>
+                          {{ form }}
+                        </table>
+                        <input type="submit" value="Iniciar session">
+                    </form>
+				</div>
+			</div>
+		</section>
+  </body>
+</html>

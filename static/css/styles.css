@@ -1,0 +1,203 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-image: url("bg-3.jpg") !important;
+  background-size: 100% !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+  background-position: center bottom !important;
+  padding: 50px 0px 25px !important;
+  font-family: "Courier" !important;
+}
+
+header nav {
+  height: 50px;
+  width: 100vw;
+  background: #6FB543;
+  color: white;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  box-shadow: 0px 5px 10px #000000 3d;
+}
+header nav span {
+  font-weight: bold;
+  letter-spacing: 2px;
+  padding: 15px 20px;
+  position: relative;
+  display: block;
+}
+
+section {
+  padding: 2em 0em;
+}
+
+#login .grid-container {
+  background: transparent;
+}
+#login .grid-container .grid-x {
+  height: calc(100vh - 150px);
+}
+
+#ms {
+  text-align: center;
+  border-bottom: 2px solid #6FB543;
+  padding-bottom: 40px;
+}
+#ms .cell {
+  transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+  letter-spacing: 2px;
+  font-size: 1.25em;
+  cursor: pointer;
+  font-weight: 400;
+}
+#ms .cell span {
+  display: block;
+  width: 15%;
+  height: 2px;
+  margin: 0 auto;
+  background: rgba(111, 181, 67, 0.5);
+}
+#ms .cell.step-active, #ms .cell:hover {
+  font-weight: 700;
+}
+#ms .cell.step-active span, #ms .cell:hover span {
+  background: #6fb543;
+}
+
+.grid-container {
+  position: relative;
+  background: white;
+}
+.grid-container .grid-x {
+  position: relative;
+}
+
+.step {
+  transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.step:not(.active) {
+  display: none;
+}
+
+#result .grid-container {
+  padding-top: 2em;
+  padding-bottom: 2em;
+  border: 2px solid rgba(111, 181, 67, 0.5);
+  box-shadow: 0px 5px 10px #000000 3d;
+}
+
+.middle {
+  height: 100%;
+}
+
+.separator {
+  height: 4px;
+  background: #6FB543;
+  margin: 40px auto 10px !important;
+  width: 75% !important;
+}
+
+.separator-vertical {
+  width: 2px;
+  height: 50%;
+  position: absolute;
+  margin: auto !important;
+  left: 0;
+  right: 0;
+  top: 15%;
+  bottom: 0;
+  background: #6FB543;
+}
+
+h2, p {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.c-table {
+  max-height: 220px;
+  overflow-y: scroll;
+}
+
+table {
+  width: 100%;
+}
+table thead {
+  background: #6FB543;
+  color: white;
+}
+table thead th {
+  padding: 5px 20px;
+  text-align: center;
+}
+table td {
+  text-align: center;
+  border-bottom: 1px solid rgba(111, 181, 67, 0.3);
+}
+table td:last-of-type {
+  font-weight: bold;
+}
+table td.p {
+  color: #6FB543;
+}
+
+p {
+  margin-bottom: 30px;
+  margin-top: 0px;
+}
+
+.fs {
+  border: 0px;
+  padding: 0px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+.fs label {
+  display: block;
+  font-size: 0.8em;
+  background: #f6f6f6;
+}
+.fs input, .fs select {
+  border: 0px;
+  border-bottom: 1px solid #6FB543;
+  border-radius: 0px;
+  background: transparent;
+  width: 100%;
+  background: #f6f6f6;
+}
+.fs select {
+  cursor: pointer;
+}
+.fs .error {
+  color: #bb0000;
+  font-size: 0.75em;
+  height: 15px;
+  display: block;
+  position: relative;
+  background: #f6f6f6;
+}
+
+.btn {
+  border: 2px solid #6FB543;
+  outline: none;
+  border-radius: 0px;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #6FB543;
+  transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+  text-decoration: none;
+  margin-top: 10px;
+  text-align: center;
+  background: #f6f6f6;
+  box-shadow: 0px 5px 10px #000000 3d;
+  text-transform: uppercase;
+}
+.btn:hover {
+  background: #6fb543;
+  letter-spacing: 2px;
+  color: white;
+}

@@ -1,0 +1,240 @@
+{% load static %}
+{% load sass_tags %}
+<!DOCTYPE html>
+<html>
+  <head>
+		<title>Data Job!</title>
+    <link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.9.0.min.css" type="text/css" />
+    <link href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.0.min.css" rel="stylesheet" type="text/css">
+    <link href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.0.min.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="{% sass_src 'css/styles.scss' %}">
+		<link rel="stylesheet" href="{% static 'css/foundation.min.css' %}">
+  </head>
+  <body>
+		<header>
+			<nav>
+				<span>Data Job!</span>
+			</nav>
+		</header>
+
+		<section id="result">
+			<div class="grid-container">
+				<div id="ms" class="grid-x grid-margin-x align-center-middle">
+					<div class="cell small-6 step-btn step-active" data-step="1">GENERAL STATS<span></span></div>
+					<div class="cell small-6 step-btn" data-step="2">NEW YORK STATS!<span></span></div>
+				</div>
+
+				<div class="grid-x align-center-middle step step-1 active">
+					<div class="cell">
+						<div class="grid-x grid-padding-y">
+							<h2 class="cell">Offers By City</h2>
+							<div class="cell">
+								<div class="grid-x">
+									<div class="cell">
+      							{{ fig1 | safe }}
+									</div>
+								</div>
+							</div>
+
+							<div class="cell">
+								<div class="grid-x grid-margin-x">
+									<div class="cell medium-6 align-self-stretch">
+										<div class="grid-x middle align-middle">
+											<div class="cell">
+												The following graph show the amount of offers in each city.
+											</div>
+										</div>
+									</div>
+
+									<div class="separator-vertical"></div>
+
+                                    <div class="c-table cell medium-6">
+                                        <table cellspacing="0" cellpadding="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>City</th>
+                                                    <th>Offers</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                              {% for x,y in muestra %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{x}}</td>
+                                                    <td>{{y}}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+								</div>
+							</div>
+						</div>
+
+						<div class="grid-x">
+							<div class="cell separator"></div>
+						</div>
+
+						<div class="grid-x grid-padding-y">
+							<h2 class="cell">Offers By Week</h2>
+							<div class="cell">
+								<div class="grid-x grid-margin-y">
+									<div class="cell">
+      							{{ fig2 | safe }}
+									</div>
+								</div>
+							</div>
+
+							<div class="cell">
+								<div class="grid-x grid-margin-x">
+									<div class="cell medium-6 align-self-stretch">
+										<div class="grid-x middle align-middle">
+											<div class="cell">
+												The following graph show the amount of offers in last 3 weeks and a prediction for next week.
+											</div>
+										</div>
+									</div>
+
+									<div class="separator-vertical"></div>
+
+                                    <div class="c-table cell medium-6">
+                                        <table class="cell medium-6" cellspacing="0" cellpadding="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Week</th>
+                                                    <th>Offer Amount</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for week,num in muestra1 %}
+                                                <tr>
+                                                    <td>{{week}}</td>
+                                                    <td>{{num}}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="grid-x align-center-middle step step-2">
+					<div class="cell">
+						<div class="grid-x grid-margin-x grid-padding-y">
+							<h2 class="cell">Empleos por agencia</h2>
+                            <div class="cell medium-8">
+                                {{ fig5 | safe }}
+                            </div>
+
+							<!--<div class="separator-vertical"></div>-->
+
+							<div class="cell medium-4">
+								Las agencias de contratación de la Ciudad de Nueva York que más vacantes
+								publicaron fue el <b>departamento de salud mental e higiene con 811 vacantes</b>,
+								seguido del <b>departamento de protección ambiental con 756 publicaciones.</b>
+								<br/>
+								<br/>
+								Mientras que las agencias con menos publicaciones son el sistema de jubilación
+								de profesores y Administrador Público - Nueva York, con solo una vacante.
+								De estos resultados podemos deducir el tamaño de las agencias,
+								además <b>la mediana para el número de publicaciones es 31, </b>
+								lo que indica que <b>el 50% de las agencias publicaron almenos 31 vacantes.</b>
+							</div>
+
+							<div class="separator"></div>
+						</div>
+
+						<div class="grid-x grid-margin-x">
+							<h2 class="cell">Ofertas internas/externas</h2>
+							<div class="cell medium-6 align-self-stretch">
+								<div class="grid-x middle align-middle">
+									<div class="cell">
+										A continuación la siguiente gráfica de barras para tipo de publicación,
+										nos indica que hay <b>2035 publicaciones internas</b> que son aquellas
+										que están disponibles solo para empleados de la Ciudad
+										y hay un total de <b>1640 publicaciones externas</b> es decir
+										aquellas que están disponibles para el público en general.
+									</div>
+								</div>
+							</div>
+
+							<div class="cell medium-6">
+								{{ fig3 | safe }}
+							</div>
+
+							<div class="separator"></div>
+						</div>
+
+						<div class="grid-x grid-margin-x">
+							<h2 class="cell">Empleos con mayor oferta</h2>
+							<div class="cell medium-8">
+                                {{ fig6 | safe }}
+                            </div>
+
+							<div class="separator-vertical"></div>
+
+							<div class="cell medium-4 align-self-stretch">
+								<div class="grid-x middle align-middle">
+									<div class="cell">
+										De la tabla anterior podemos observar que hay
+										un total de <b>369 cargos</b>, de los cuales observamos
+										 que los tres cargos más solicitados,
+										son <b>coordinador de comunidad que representan
+									 el 60.97% de la oferta</b>, seguido de <b>investigador
+									 cientifico de ciudad</b> y <b>gerente de sistemas
+									 de computo</b>, mientras que especialista de
+									 protección infantil y autidor administrativo
+										de impuesto solo publicaron una oferta.
+									</div>
+								</div>
+							</div>
+
+							<div class="separator"></div>
+						</div>
+
+
+						<div class="grid-x grid-margin-x">
+							<h2 class="cell">Ofertas de medio / tiempo completo</h2>
+							<div class="cell medium-4 align-self-stretch">
+								<div class="grid-x middle align-middle">
+									<div class="cell">
+										Para la variable tiempo total / tiempo parcial que denota si el trabajo es a
+                                        tiempo completo o parcial, se obtuvieron los siguientes resultados.
+                                        El <b>92.6%</b>b> de las vacantes son para tiempo total,
+                                        mientras que el <b>7.4%</b> son para tiempo parcial.
+									</div>
+								</div>
+							</div>
+
+							<!--<div class="separator-vertical"></div>-->
+
+							<div class="cell medium-8">
+								{{ fig7 | safe }}
+							</div>
+
+							<div class="separator"></div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</section>
+		<footer>
+      <script src="http://cdn.pydata.org/bokeh/release/bokeh-1.0.1.min.js"></script>
+      <script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-1.0.1.min.js"></script>
+			<script type="text/javascript" src="{% static "js/jquery-3.3.1.min.js" %}"></script>
+			<script type="text/javascript" src="{% static "js/script.js" %}"></script>
+    	{{ script1 | safe }}
+    	{{ script2 | safe }}
+    	{{ script3 | safe }}
+    	{{ script4 | safe }}
+        {{ script5 | safe }}
+        {{ script6 | safe }}
+        {{ script7 | safe }}
+		</footer>
+  </body>
+</html>

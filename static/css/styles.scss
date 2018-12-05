@@ -1,0 +1,237 @@
+$t: all .4s cubic-bezier(.22,.61,.36,1);
+$red2: #bb0000;
+$red: #1F9245;
+$red: #6FB543;
+$gray: #f6f6f6;
+$bs: 0px 5px 10px #0000003d;
+
+body {
+	margin: 0;
+	min-height: 100vh;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	background-image: url('bg-3.jpg') !important;
+	background-size: 100% !important;
+	background-repeat: no-repeat !important;
+	background-attachment: fixed !important;
+	background-position: center bottom !important;
+	padding: 50px 0px 25px !important;
+	font-family: "Courier" !important;
+}
+
+header {
+	nav {
+		height: 50px;
+		width: 100vw;
+		background: $red;
+		color: white;
+		position: fixed;
+		top: 0;
+		z-index: 999;
+		box-shadow: $bs;
+
+		span {
+			font-weight: bold;
+			letter-spacing: 2px;
+			padding: 15px 20px;
+			position: relative;
+			display: block;
+		}
+	}
+}
+
+section {
+	padding: 2em 0em;
+}
+
+#login {
+	.grid-container {
+		background: transparent;
+
+		.grid-x {
+			height: calc(100vh - 150px);
+		}
+	}
+}
+
+#ms {
+	text-align: center;
+	border-bottom: 2px solid $red;
+	padding-bottom: 40px;
+
+	.cell {
+		transition: $t;
+		letter-spacing: 2px;		
+		font-size: 1.25em;
+		cursor: pointer;
+		font-weight: 400;
+
+		span {
+			display: block;
+			width: 15%;
+			height: 2px;
+			margin: 0 auto;
+			background: rgba($red, 0.5);
+		}	
+
+		&.step-active, &:hover {
+			font-weight: 700;
+
+			span {
+				background: rgba($red, 1);	
+			}
+		}
+	}
+}
+
+.grid-container {
+	position: relative;
+	background: white;
+
+	.grid-x {
+		position: relative;
+	}
+}
+
+.step {
+	transition: $t;
+	
+	&:not(.active) {
+		display: none;
+	}
+}
+
+#result {
+	.grid-container {
+		padding-top: 2em;
+		padding-bottom: 2em;
+		border: 2px solid rgba($red, 0.5);
+		box-shadow: $bs;
+	}
+}
+
+.middle {
+	height: 100%;
+}
+
+.separator {
+	height: 4px;
+	background: $red;
+	margin: 40px auto 10px !important;
+	width: 75% !important;
+}
+
+.separator-vertical {
+    width: 2px;
+    height: 50%;
+    position: absolute;
+    margin: auto !important;
+    left: 0;
+    right: 0;
+    top: 15%;
+    bottom: 0;
+		background: $red;
+}
+
+h2 {
+}
+
+h2, p {
+	text-align: left;
+	margin-bottom: 15px;
+}
+
+.c-table {
+	max-height: 220px;
+	overflow-y: scroll;
+}
+
+table {
+	width: 100%;
+
+	thead {
+		background: $red;
+		color: white;
+		
+		th {
+			padding: 5px 20px;
+			text-align: center;
+		}
+	}
+
+	td {
+		text-align: center;
+		border-bottom: 1px solid rgba($red, 0.3);
+
+		&:last-of-type {
+			font-weight: bold;
+		}
+
+		&.p {
+			color: $red;
+		}
+	}
+}
+
+p {
+	margin-bottom: 30px;
+	margin-top: 0px;
+}
+
+.fs {
+	border: 0px;
+	padding: 0px;
+	margin-bottom: 10px;
+	box-sizing: border-box;
+
+	label {
+		display: block;
+		font-size: 0.8em;
+		background: $gray;
+	}
+
+	input, select {
+		border: 0px;
+		border-bottom: 1px solid $red;
+		border-radius: 0px;
+		background: transparent;
+		width: 100%;
+		background: $gray;
+	}
+
+	select {
+		cursor: pointer;
+	}
+
+	.error {
+		color: $red2;
+		font-size: 0.75em;
+		height: 15px;
+		display: block;
+		position: relative;
+		background: $gray;
+	}
+}
+
+.btn {
+	border: 2px solid $red;
+	outline: none;
+	border-radius: 0px;
+	padding: 10px;
+	font-weight: bold;
+	cursor: pointer;
+	color: $red;
+	transition: $t;
+	text-decoration: none;
+	margin-top: 10px;
+	text-align: center;
+	background: $gray;
+	box-shadow: $bs;
+	text-transform: uppercase;
+
+	&:hover {
+		background: rgba($red, 1);
+		letter-spacing: 2px;
+		color: white;
+	}
+}
